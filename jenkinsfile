@@ -61,14 +61,15 @@ pipeline {
             steps {
                 script {
                     sh ' python3 clean_environment.py'
-                stage('build docker image ') {
+                    }
+        stage('build docker image') {
             steps {
                 script {
                     sh ' docker build -t project3 .'
                 }
             }
         }
-         stage('build and push image') {
+        stage('build and push image') {
             steps {
                 script {
                     dockerImage = docker.build registry + ":$BUILD_NUMBER"
