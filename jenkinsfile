@@ -1,5 +1,10 @@
 pipeline {
     agent any
+    environment {
+        registry = "ikitaichik/devops_course"
+        registryCredential = 'docker_hub'
+        dockerImage = ''
+        }
     options {
         buildDiscarder(logRotator(numToKeepStr: '20', daysToKeepStr: '5' ))
     }
@@ -56,17 +61,56 @@ pipeline {
             steps {
                 script {
                     sh ' python3 clean_environment.py'
-
+                stage('build docker image ') {
+            steps {
+                script {
+                    sh ' docker build -t project3 .'
+                }
+            }
+        }
+         stage('build and push image') {
+            steps {
+                script {
+                    dockerImage = docker.build registry + ":$BUILD_NUMBER"
+                    docker.withRegistry('', registryCredential) {
+                    dockerImage.push()
+                    }
+                }
+            }
+        post{
+        always{
+            sh "docker rmi $registry:$BUILD_NUMBER"
+               }
+           }
+        }
+        stage('Set compose image version ') {
+            steps {
+                script {
+                    sh ' echo IMAGE_TAG=${BUILD_NUMBER} > .env'
+                }
+            }
+        }
+        stage('run docker compose ') {
+            steps {
+                script {
+                    sh ' docker-compose up -d '
+                }
+            }
+        }
+        stage('run docker backend testing') {
+            steps {
+                script {
+                    sh ' python docker_backend_testing.py'
+                }
+            }
+        }
+         stage('run clean docker environment environment ') {
+            steps {
+                script {
+                    sh 'docker rmi project3'
+                    sh 'docker-compose down'
                 }
             }
         }      
     }
-     post {  
-         success {  
-             echo 'successful test'  
-         }  
-         failure {  
-             echo 'body: "<br>Project: {job} <br>Build Number: {buildNumb} <br> build URL: {URL}", charset: \'UTF-8\', from: \'\', mimeType: \'text/html\', replyTo: \'\', subject: "ERROR on jenkins build: {job}", to: "ikitaichik@liveperson.com";'  
-         }  
-     }  
 }
