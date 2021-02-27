@@ -14,18 +14,10 @@ pipeline {
                 script {
                     properties([pipelineTriggers([pollSCM('*/30 * * * *')])])
                 }
-                git 'https://github.com/ikitaichik/Project3.git'
+                git 'https://github.com/ikitaichik/project3.git'
             }
         }
-        stage('run rest app server ') {
-            steps {
-                script {
-                    sh 'nohup python3 web_app.py &'
-
-                }
-            }
-        }
-        stage('run web app server') {
+        stage('run rest app server') {
             steps {
                 script {
                     sh 'nohup python3 rest_app.py &'
@@ -33,6 +25,7 @@ pipeline {
                 }
             }
         }
+
         stage('run backend testing') {
             steps {
                 script {
@@ -41,27 +34,14 @@ pipeline {
                 }
             }
         }
-        stage('run frontend testing') {
-            steps {
-                script {
-                    sh 'python3 frontend_testing.py'
-
-                }
-            }
-        }
-        stage('run combined testing') {
-            steps {
-                script {
-                    sh 'python3 combined_testing.py'
-
-                }
-            }
-        }
-        stage('run clean environment ') {
+        stage('run clean environment') {
             steps {
                 script {
                     sh ' python3 clean_environment.py'
-                    }
+
+                }
+            }
+        }
         stage('build docker image') {
             steps {
                 script {
@@ -69,7 +49,7 @@ pipeline {
                 }
             }
         }
-        stage('build and push image') {
+         stage('build and push image') {
             steps {
                 script {
                     dockerImage = docker.build registry + ":$BUILD_NUMBER"
@@ -81,20 +61,21 @@ pipeline {
         post{
         always{
             sh "docker rmi $registry:$BUILD_NUMBER"
-               }
-           }
         }
-        stage('Set compose image version ') {
+       }
+      }
+
+        stage('set compose image version') {
             steps {
                 script {
                     sh ' echo IMAGE_TAG=${BUILD_NUMBER} > .env'
                 }
             }
         }
-        stage('run docker compose ') {
+        stage('run docker compose') {
             steps {
                 script {
-                    sh ' docker-compose up -d '
+                    sh ' docker-compose up -d'
                 }
             }
         }
@@ -105,13 +86,13 @@ pipeline {
                 }
             }
         }
-         stage('run clean docker environment environment ') {
+         stage('run clean docker environment') {
             steps {
                 script {
                     sh 'docker rmi project3'
                     sh 'docker-compose down'
                 }
             }
-        }      
+        }
     }
 }
