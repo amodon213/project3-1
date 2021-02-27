@@ -2,7 +2,7 @@ pipeline {
     agent any
     environment {
         registry = "ikitaichik/devops_course"
-        registryCredential = 'docker_hub'
+        registryCredential = 'dockerhub'
         dockerImage = ''
         }
     options {
