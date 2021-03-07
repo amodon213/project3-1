@@ -21,7 +21,7 @@ def user(id):
 
 
 @app.route('/print')
-def health_check():
+def print_stephan():
     return "I love Stephan"
 
 @app.route('/')
