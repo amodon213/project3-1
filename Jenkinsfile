@@ -58,7 +58,7 @@ pipeline {
                     }
                 }
             }
-                post{
+        post{
         always{
             sh "docker rmi $registry:$BUILD_NUMBER"
         }
