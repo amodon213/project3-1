@@ -21,6 +21,7 @@ def user(id):
 
 
 @app.route('/')
+def health_check():
     return 200
 
 @app.route('/stop_server')
