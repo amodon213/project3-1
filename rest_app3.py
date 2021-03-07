@@ -22,7 +22,7 @@ def user(id):
 
 @app.route('/')
 def health_check():
-    return 200
+    return "200"
 
 @app.route('/stop_server')
 def stop_server():
