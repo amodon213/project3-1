@@ -20,6 +20,10 @@ def user(id):
         return {'status': 'error', 'reason': "No such id"}, 500  # status code
 
 
+@app.route('/print')
+def health_check():
+    return "I love Stephan"
+
 @app.route('/')
 def health_check():
     return "200"
@@ -30,4 +34,4 @@ def stop_server():
     return 'Server stopped'
 
 
-app.run(host='0.0.0.0')
+app.run(host='127.0.0.1', debug=True, port=5000)
