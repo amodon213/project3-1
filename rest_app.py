@@ -19,7 +19,9 @@ def user(id):
 
     elif request.method == 'GET':
         try:
+            print(id)
             name = get_id(id)
+            print(f'name {name}') 
             if name == '':
                 raise Exception
             else:
