@@ -8,10 +8,10 @@ app = Flask(__name__)
 
 # supported methods
 @app.route('/users/<id>', methods=['GET', 'POST', 'DELETE', 'PUT'])
-def user(sent_id):
+def user(id):
     if request.method == 'GET':
         try:
-            name = get_id(sent_id)
+            name = get_id(id)
             if name == '':
                 raise Exception
             else:
@@ -22,7 +22,7 @@ def user(sent_id):
     elif request.method == 'POST':
         try:
             name = request.json.get('name')
-            insert_user(sent_id, name)
+            insert_user(id, name)
             return {'status': 'ok', 'user added': name}, 200  # status code
         except:
             return {'status': 'error', 'reason': 'No such id'}, 500 # status code# status cod
@@ -31,15 +31,15 @@ def user(sent_id):
     elif request.method == 'PUT':
         try:
             name = request.json.get('name')
-            update_user(name, sent_id)
+            update_user(name, id)
             return {'status': 'ok', 'user_updated': name}, 200  # status code
         except:
             return {'status': 'error', 'reason': 'No such id'}, 500
 
     elif request.method == 'DELETE':
         try:
-            delete_user(sent_id)
-            return {'status': 'ok', 'user_deleted': sent_id}, 200  # status code
+            delete_user(id)
+            return {'status': 'ok', 'user_deleted': id}, 200  # status code
         except:
             return {'status': 'error', 'reason': 'No such id'}, 500
 
