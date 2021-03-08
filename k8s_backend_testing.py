@@ -5,8 +5,7 @@ time.sleep(15)
 
 try:
     url = open("k8s_url.txt",'r').read().strip()
-    url +=  "/users/1"   
-    print(url)
+    url +=  "/users/2"
     res = requests.get(url)
 
     print(res.json())
