@@ -25,6 +25,7 @@ def user(id):
             else:
                 return {'status': 'ok', 'user name': name}, 200
         except:
+            print("HAHAHA")
             return {'status': 'error', 'reason': "No such id"}, 500  # status code
 
     elif request.method == 'PUT':
