@@ -118,7 +118,7 @@ pipeline {
         stage('clean environment') {
             steps {
                 script {
-                    sh 'helm delete testing'
+                    sh 'helm delete k8s-check'
                 }
             }
         }
