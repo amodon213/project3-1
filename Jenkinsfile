@@ -108,6 +108,11 @@ pipeline {
                 }
             }
         }
+        stage ('wait for pods to start (sleep)') {
+            steps {
+                sleep 30
+            }
+        }
         stage('k8s check') {
             steps {
                 script {
