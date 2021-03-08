@@ -17,7 +17,7 @@ def user(sent_id):
             else:
                 return {'status': 'ok', 'user name': name}, 200
         except:
-            return {'status': 'error', 'reason': f'No such {sent_id} haha'}, 500  # status code
+            return {'status': 'error', 'reason': 'No such id haha'}, 500  # status code
 
     elif request.method == 'POST':
         try:
