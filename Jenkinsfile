@@ -94,5 +94,33 @@ pipeline {
                 }
             }
         }
+        stage('deploy helm with latest build') {
+            steps {
+                script {
+                    sh 'helm upgrade --install k8s-check project3-0.1.0.tgz --set image.tag=${BUILD_NUMBER}'
+                }
+            }
+        }
+        stage('url to file') {
+            steps {
+                script {
+                    sh 'minikube service k8s-check-project3 --url > k8s_url.txt'
+                }
+            }
+        }
+        stage('k8s check') {
+            steps {
+                script {
+                    sh 'python3 k8s_backend_testing.py'
+                }
+            }
+        }
+        stage('clean environment') {
+            steps {
+                script {
+                    sh 'helm delete testing'
+                }
+            }
+        }
     }
 }
