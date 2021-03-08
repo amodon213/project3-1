@@ -42,6 +42,10 @@ def user(id):
         except:
             return {'status': 'error', 'reason': "Mo such id"}, 500
 
+@app.route('/')
+def health_check():
+    return "200"
+
 @app.route('/stop_server')
 def stop_server():
     os.kill(os.getpid(), signal.SIGINT)
