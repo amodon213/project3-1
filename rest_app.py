@@ -17,7 +17,7 @@ def user(sent_id):
             else:
                 return {'status': 'ok', 'user name': name}, 200
         except:
-            return {'status': 'error', 'reason': "No such id haha}, 500  # status code
+            return {'status': 'error', 'reason': f'No such {sent_id} haha'}, 500  # status code
 
     elif request.method == 'POST':
         try:
@@ -25,7 +25,7 @@ def user(sent_id):
             insert_user(sent_id, name)
             return {'status': 'ok', 'user added': name}, 200  # status code
         except:
-            return {'status': 'error', 'reason': "No such id"}, 500 # status code# status cod
+            return {'status': 'error', 'reason': 'No such id'}, 500 # status code# status cod
 
     
     elif request.method == 'PUT':
@@ -34,14 +34,14 @@ def user(sent_id):
             update_user(name, sent_id)
             return {'status': 'ok', 'user_updated': name}, 200  # status code
         except:
-            return {"status": "error", "reason": "No such id"}, 500
+            return {'status': 'error', 'reason': 'No such id'}, 500
 
     elif request.method == 'DELETE':
         try:
             delete_user(sent_id)
             return {'status': 'ok', 'user_deleted': sent_id}, 200  # status code
         except:
-            return {'status': 'error', 'reason': "No such id"}, 500
+            return {'status': 'error', 'reason': 'No such id'}, 500
 
 @app.route('/')
 def health_check():
