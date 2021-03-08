@@ -19,15 +19,13 @@ def user(id):
 
     elif request.method == 'GET':
         try:
-            print(id)
             name = get_id(id)
-            print(f'name {name}') 
             if name == '':
                 raise Exception
             else:
                 return {'status': 'ok', 'user name': name}, 200
         except:
-            return {'status': 'error', 'reason': "No such idWHY?"}, 500  # status code
+            return {'status': 'error', 'reason': "No such id"}, 500  # status code
 
     elif request.method == 'PUT':
         try:
