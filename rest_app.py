@@ -40,7 +40,7 @@ def user(id):
             delete_user(id)
             return {'status': 'ok', 'user_deleted': id}, 200  # status code
         except:
-            return {'status': 'error', 'reason': "Mo such id"}, 500
+            return {'status': 'error', 'reason': "No such id"}, 500
 
 @app.route('/')
 def health_check():
