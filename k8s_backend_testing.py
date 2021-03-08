@@ -2,7 +2,8 @@ import requests
 
 try:
     url = open("k8s_url.txt",'r').read().strip()
-    url += "/users/1"
+    url = "\"" + url +  "/users/1" + "\""
+    
     print(url)
     res = requests.get({url})
 
