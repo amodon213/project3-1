@@ -4,7 +4,8 @@ try:
     url = open("k8s_url.txt",'r').read()
     url = url[:-1]
     url = f'{url}/users/1'
-    res = requests.get(f'{url}')
+    print(url)
+    res = requests.get({url})
 
     print(res.json())
 
